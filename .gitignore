@@ -27,6 +27,7 @@ app/public/wp-admin/
 app/public/wp-includes/
 app/public/index.php
 app/public/wp-*.php
+!app/public/wp-config.example.php
 app/public/xmlrpc.php
 app/public/license.txt
 app/public/readme.html
@@ -36,6 +37,8 @@ app/public/wp-content/plugins/
 app/public/wp-content/themes/
 
 # Keep only custom code dirs if needed
+!app/public/wp-content/plugins/
+!app/public/wp-content/themes/
 !app/public/wp-content/plugins/.gitkeep
 !app/public/wp-content/themes/.gitkeep
 !app/public/wp-content/mu-plugins/
