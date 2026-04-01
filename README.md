@@ -22,16 +22,35 @@ evitar secretos y mantener un flujo limpio para Dokploy.
 ## Flujo recomendado (GitHub + Dokploy)
 
 1. Subir este repo a GitHub.
-2. En Dokploy, crear servicio WordPress (Application o Compose segun estrategia).
+2. En Dokploy, crear servicio WordPress usando Docker Compose.
 3. Definir variables sensibles en Dokploy (no en Git):
-   - DB_HOST
-   - DB_NAME
-   - DB_USER
-   - DB_PASSWORD
-   - WP_HOME
-   - WP_SITEURL
-4. Durante build/deploy, instalar WordPress core + plugins desde fuente/version definida.
-5. Mantener contenido de medios en volumen persistente y backups.
+   - MYSQL_DATABASE
+   - MYSQL_USER
+   - MYSQL_PASSWORD
+   - MYSQL_ROOT_PASSWORD
+4. En Dokploy Compose -> Environment, copiar las variables de `.env.example` con valores reales.
+5. En Dokploy Compose -> Domains, asignar el dominio a `wordpress` en puerto 80 y habilitar HTTPS.
+6. Mantener contenido de medios en volumen persistente y backups.
+
+## Paso a paso rapido para aprender la interfaz de Dokploy
+
+1. Git Sources -> conecta GitHub.
+2. Projects -> Create Project -> SACCS.
+3. Crea environment `development`.
+4. Dentro de development: Create Service -> Docker Compose.
+5. En General:
+   - Repository: este repo
+   - Branch: dev
+   - Compose file: docker-compose.yml
+6. En Environment: agrega las variables del archivo `.env.example` con passwords reales.
+7. Deploy y revisa Deployments + Logs.
+8. En Domains:
+   - Host: tu subdominio dev
+   - Service: wordpress
+   - Container port: 80
+   - HTTPS: ON (letsencrypt)
+9. Cuando validas en dev, merge de dev -> main.
+10. Repite el mismo servicio en environment `production` apuntando a branch main.
 
 ## Si quieres incluir plugin o theme custom
 
